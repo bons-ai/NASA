@@ -33,8 +33,8 @@ clusterer.fit(embedding)
 
 results = []
 for n in range(pos.shape[1]):
-    results.append({"coordinates": pos[:, n],
-                    "type": clusterer.labels_[n]})
+    results.append({"coordinates": list(pos[:, n]),
+                    "type": float(clusterer.labels_[n])})
 
 full_data = {"points": results,
              "minLat": np.min(pos[0, :]),
@@ -42,5 +42,5 @@ full_data = {"points": results,
              "minLong": np.min(pos[1, :]),
              "maxLong": np.max(pos[1, :])}
 
-
-np.save("results.npy", full_data)
+with open("results.json", "w", encoding='utf-8') as f:
+    json.dump(full_data, f)
